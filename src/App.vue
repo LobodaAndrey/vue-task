@@ -1,29 +1,26 @@
 <template>
   <div id="app">
-    <PostForm />
-    <h1>{{postsCount}}</h1>
-    <div class="post" v-for="post in validPosts" :key="post.id">
-      <h2>{{post.title}}</h2>
-      <p>{{post.body}}</p>
-    </div>
+    <h1>Super test app</h1>
+    <el-button type="warning" plain v-if="user.isAuth" @click="logout">Logout</el-button>
+    <router-view></router-view>
   </div>
 </template>
-
 <script>
-
-import {mapGetters, mapActions} from 'vuex';
-import PostForm from './components/PostForm';
+import { mapActions, mapMutations, mapState } from "vuex";
+import Login from "./views/login";
 
 export default {
-  name: 'App',
-  computed: mapGetters(['validPosts', 'postsCount']),
-  methods: mapActions(['fetchPosts']),
-  components: {PostForm},
-  async mounted() {
-    // this.$store.dispatch('fetchPosts')
-    this.fetchPosts();
+  name: "App",
+  computed: mapState(["user"]),
+  methods: {
+    ...mapActions(["auth"]),
+    ...mapMutations(["cleanUser"]),
+    logout: function() {
+      this.cleanUser();
+      this.$router.push("/login");
+    }
   }
-}
+};
 </script>
 
 <style>
@@ -34,12 +31,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin: 60px auto;
-  width: 400px;
+  max-width: 800px;
 }
-.post {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-}
-
 </style>

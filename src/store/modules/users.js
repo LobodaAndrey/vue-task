@@ -18,10 +18,5 @@ export default {
   },
   state: {
     list: []
-  },
-  getters: {
-    clearedList(state){
-      return state.list.map(el => el.id)
-    }
   }
 };

@@ -3,7 +3,7 @@
     <h1>Please Login</h1>
     <small>Email: any valid email address. Password: 123</small>
     <el-form class="login-form" ref="form" label-width="120px">
-      <el-form-item label="Login">
+      <el-form-item label="Email">
         <el-input v-model="login"></el-input>
       </el-form-item>
       <el-form-item label="Password">

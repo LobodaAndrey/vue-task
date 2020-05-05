@@ -1,10 +1,13 @@
+import axios from 'axios';
+
 export default {
   actions: {
-    async fetchUsers(ctx, limit = '3') {
-      const res = await fetch('https://api.github.com/search/users?q=repos:%3E12+followers:%3C1000&location:uk+language:python&page=1&per_page=10')
-      const users = await res.json();
-      if (users.items) {
-        ctx.commit('updateUsersList', users.items)
+    async fetchUsers(ctx, amount = '20') {
+      const res = await axios.get(`https://api.github.com/search/users?q=repos:%3E12+followers:%3C1000&location:uk+language:python&page=1&per_page=${amount}`);
+      if (res.status === 200 && res.data.items) {
+        ctx.commit('updateUsersList', res.data.items)
+      } else {
+        throw new Error('Cant fetch request')
       }
     }
   },
@@ -15,5 +18,10 @@ export default {
   },
   state: {
     list: []
+  },
+  getters: {
+    clearedList(state){
+      return state.list.map(el => el.id)
+    }
   }
 };

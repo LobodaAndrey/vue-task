@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <h1>Super test app</h1>
-    <el-button type="warning" plain v-if="user.isAuth" @click="logout">Logout</el-button>
+    <div class="flex align-center">
+      <h1 class="page-heading">Super test app</h1>
+      <el-button type="warning" plain v-if="user.isAuth" @click="logout">Logout</el-button>
+    </div>
     <router-view></router-view>
   </div>
 </template>

@@ -9,23 +9,28 @@ export default {
     async signIn(ctx, user) {
       try {
         function fakeAuthRequest() {
-          return new Promise((resolve) => {
+          return new Promise((resolve, reject) => {
             setTimeout(() => {
-              if (user.login.includes('com')) {
+              if (user.password === '123') {
                 resolve({
+                  status: 200,
                   username: 'user123',
-                  token: '312u0u3'
+                  token: '123hjk89uja'
                 });
+              } else {
+                reject({
+                  status: 400,
+                  message: 'Oops, invalid Login or password'
+                })
               }
-              else {
-                reject('wrong Login or Password')
-              }
-            }, 1000);
+            }, 1500);
           });
         }
-        const res = await fakeAuthRequest();
-        if (res) {
+        const res = await fakeAuthRequest().catch(e => e);
+        if (res && res.status === 200) {
           ctx.commit('signInUser', res);
+        } else {
+          return res;
         }
       } catch (error) {
         console.log('Error LOGIN', error)

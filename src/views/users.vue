@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>List of users</h2>
-    <ul class="flex">
+    <ul class="flex list">
       <li :key="i" v-for="(item, i) of users.list" class="user-item" @click="goToSingle(item)">
         <div class="flex">
           <el-avatar :size="50" :src="item['avatar_url']"></el-avatar>
@@ -35,10 +35,15 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+.list {
+  flex-direction: column;
+  max-height: 400px;
+}
 .user-item {
   padding: 5px 10px;
   cursor: pointer;
-  max-width: 250px;
+  min-width: 200px;
+  max-width: 230px;
   list-style-type: none;
   border-radius: 5px;
 }
